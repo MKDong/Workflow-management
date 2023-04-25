@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function footer() {
     return (
@@ -10,21 +11,21 @@ function footer() {
                         <hr />
                         <div className="my-2">
                             Address:{" "}
-                            <a className="hover:underline" href="#">
+                            <Link className="hover:underline" href="#">
                                 Viet Nam
-                            </a>
+                            </Link>
                         </div>
                         <div className="my-2">
                             Email:{" "}
-                            <a className="hover:underline" href="#">
+                            <Link className="hover:underline" href="#">
                                 dongmk@gmail.com
-                            </a>
+                            </Link>
                         </div>
                         <div className="my-2">
                             Phone:{" "}
-                            <a className="hover:underline" href="#">
+                            <Link className="hover:underline" href="#">
                                 0971616598
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="h-48 mt-8 mx-5 lg:w-full ">
@@ -33,13 +34,13 @@ function footer() {
                         </h1>
                         <hr />
                         <div className="my-2 flex xl:justify-start lg:justify-start sm:justify-end md:justify-end">
-                            <a href="">
+                            <Link href="">
                                 <img
                                     className="w-11 h-10 mr-2"
                                     src="https://res.cloudinary.com/thisisninh/image/upload/v1668088609/fb__u8rwjt.png"
                                     alt=""
                                 />
-                            </a>
+                            </Link>
                             <img
                                 className="w-10 h-10 mx-2"
                                 src="https://res.cloudinary.com/thisisninh/image/upload/v1668088637/zalo__rbqljr.png"
@@ -56,14 +57,14 @@ function footer() {
                         <h1 className="font-bold text-2xl">Link</h1>
                         <hr />
                         <div className="my-2">
-                            <a className="hover:underline" href="#">
+                            <Link className="hover:underline" href="#">
                                 Introduce
-                            </a>
+                            </Link>
                         </div>
                         <div className="my-2">
-                            <a className="hover:underline " href="test.html">
+                            <Link className="hover:underline " href="test.html">
                                 Test
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

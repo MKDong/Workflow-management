@@ -1,7 +1,6 @@
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import _debounce from "lodash/debounce";
 import { getValueSearch } from "../../../service/getAllApi";
 import UseDebounce from "./UseDebounce";
 import { useDispatch } from "react-redux";
@@ -62,12 +61,12 @@ function Search() {
                     </button>
                 }
             />
-            <div className=" w-52 z-10 rounded-md  bg-slate-300 absolute">
+            <div className=" w-52 z-10 rounded-md  bg-slate-300 absolute overflow-hidden">
                 {dataSearch.map((item) => {
                     return (
                         <ul>
                             <li
-                                className="hover:bg-gray-600 hover:text-white overflow-hidden p-3"
+                                className="hover:bg-gray-600 hover:text-white  p-3"
                                 onClick={() => {
                                     hadleClickItem(item);
                                 }}

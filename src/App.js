@@ -7,8 +7,22 @@ import Register from './component/auth/Register';
 import ListTask from './component/usser/tasks/ListTask';
 import Profile from './component/usser/Profile';
 import Statistical from './component/usser/Statistical';
+import { useEffect } from 'react';
+import { getPopulate } from './service/getAllApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { taskAllNoPaginition } from './redux/couterSlice/couterSlice';
 
 function App() {
+  const dispatch = useDispatch()
+  const reRenderr = useSelector((store) => store.counter.ItemreRender);
+  useEffect(() => {
+    async function getAllTask() {
+        let res = await getPopulate();
+        dispatch(taskAllNoPaginition(res.data.data))
+        // console.log(res.data.data);
+    }
+    getAllTask();
+}, [dispatch, reRenderr]);
   return (
     <Routes>
       <Route path='/' element={<Home/>}>

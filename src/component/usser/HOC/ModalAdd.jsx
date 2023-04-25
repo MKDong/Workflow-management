@@ -1,9 +1,12 @@
 import { Button, Input, Modal } from "antd";
 import { useState } from "react";
 import { postAddValue } from "../../../service/getAllApi";
+import { useDispatch } from "react-redux";
+import { reRender } from "../../../redux/couterSlice/couterSlice";
 const ModalApp = () => {
     const [modal2Open, setModal2Open] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const dispatch = useDispatch();
 
     const handleAddValue = async () => {
         setModal2Open(false);
@@ -17,6 +20,7 @@ const ModalApp = () => {
         const token = localStorage.getItem("token");
         //call function post in API
         postAddValue(data, token);
+        dispatch(reRender());
     };
 
     return (

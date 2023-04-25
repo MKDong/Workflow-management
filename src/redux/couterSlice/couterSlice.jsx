@@ -8,8 +8,10 @@ const initialState = {
     },
     valueInputAdd: "",
     taskList: [],
+    taskAll: [],
     variableSearch: null,
     variablaCountTaskUnFinish: null,
+    ItemreRender: true,
 };
 
 export const counterSlice = createSlice({
@@ -32,13 +34,17 @@ export const counterSlice = createSlice({
         valueSearch: (state, action) => {
             state.variableSearch = action.payload;
         },
-        variableTaskUnFinish: (state, action) => {
-            state.variablaCountTaskUnFinish = action.payload;
+
+        taskAllNoPaginition: (state, action) => {
+            state.taskAll = action.payload;
+        },
+        reRender: (state) => {
+            return { ...state, ItemreRender: !state.ItemreRender };
         },
     },
 });
 
-export const { doLoginAction, doLogout, AddValue, valueSearch, listTaskAll, variableTaskUnFinish } =
+export const { doLoginAction, doLogout, AddValue, valueSearch, listTaskAll, reRender, taskAllNoPaginition } =
     counterSlice.actions;
 
 export default counterSlice.reducer;

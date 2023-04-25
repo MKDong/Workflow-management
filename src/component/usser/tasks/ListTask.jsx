@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { NavLink } from 'react-router-dom'
 import { Table } from "antd";
-import { deleteTask, getAllListask } from "../../../service/getAllApi";
+import { changeChecked, deleteTask, getAllListask } from "../../../service/getAllApi";
 import { useDispatch, useSelector } from "react-redux";
 import View from "../HOC/View";
-import { listTaskAll } from "../../../redux/couterSlice/couterSlice";
+import { reRender } from "../../../redux/couterSlice/couterSlice";
+
 function ListTask() {
     const [taskList, setTaskList] = useState([]);
     const [pageSize, setPageSize] = useState(5);
@@ -15,12 +15,11 @@ function ListTask() {
     const variableSearch = useSelector((store) => store.counter.variableSearch);
     // const taskFullRedux = useSelector((store) => store.counter.taskList);
     // console.log(variableSearch);
-
+    const reRenderr = useSelector((store) => store.counter.ItemreRender);
     useEffect(() => {
         async function fetchListTask() {
             const query = `api/tasks?pagination[page]=${current}&pagination[pageSize]=${pageSize}`;
             const res = await getAllListask(query);
-            dispatch(listTaskAll(res.data.data));
             setTaskList(res.data.data);
             setTotal(res.data.meta.pagination.total);
             if (variableSearch) {
@@ -28,7 +27,7 @@ function ListTask() {
             }
         }
         fetchListTask();
-    }, [current, dispatch, pageSize, variableSearch]);
+    }, [current, pageSize, variableSearch, reRenderr]);
 
     const onChange = (pagination) => {
         if (pagination && pagination.current !== current) {
@@ -41,13 +40,29 @@ function ListTask() {
 
     const handleDelete = (id) => {
         deleteTask(id, token);
+        dispatch(reRender());
+    };
+    const handleCheck = (e, id) => {
+        // console.log(e);
+        const { checked } = e.target;
+        changeChecked(id, checked, token);
+        dispatch(reRender());
     };
 
     const columns = [
         {
             title: "`?",
             dataIndex: "check",
-            render: (text, record) => <input type="checkbox" checked={record.complete} />,
+            render: (text, record) => {
+                // console.log(record);
+                return (
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheck(e, record.id)}
+                        checked={record.attributes.complete}
+                    />
+                );
+            },
         },
         {
             title: "Title",
@@ -95,7 +110,6 @@ function ListTask() {
                         >
                             Delete
                         </button>
-                        {/* <Delete handleDelete={() => handleDelete(record.id)} /> */}
                     </>
                 );
             },

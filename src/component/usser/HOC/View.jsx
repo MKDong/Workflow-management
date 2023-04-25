@@ -1,12 +1,16 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { getTaskById, putTask } from "../../../service/getAllApi";
+import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { useDispatch } from "react-redux";
+import Login from "../../auth/Login";
 
 function View(props) {
     const [modalViewOpen, setModalViewOpen] = useState(false);
     const [taskDetail, setTaskDetail] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState("");
+    const dispatch = useDispatch();
 
     const getDetailTask = async () => {
         let res = await getTaskById(props.itemId);
@@ -26,19 +30,21 @@ function View(props) {
         console.log(props.itemId, title);
         const token = localStorage.getItem("token");
         putTask(props.itemId, data, token);
+        dispatch(reRender());
     };
 
     return (
         <>
-            <button
+            <Button
                 className="border rounded-md me-3 px-3 py-1 hover:bg-green-500 "
                 onClick={() => {
-                    setModalViewOpen(true);
+                    const token = localStorage.getItem("token");
+                    token ? setModalViewOpen(true) : <Login />;
                     getDetailTask();
                 }}
             >
                 View
-            </button>
+            </Button>
             <Modal
                 centered
                 open={modalViewOpen}
@@ -89,7 +95,7 @@ function View(props) {
                                         <label className="mr-3">Title :</label>
                                         <input
                                             className="border px-2"
-                                            value={item.attributes.item}
+                                            // value={item.attributes.title}
                                             onChange={(e) => {
                                                 setTitle(e.target.value);
                                             }}
@@ -102,7 +108,7 @@ function View(props) {
                                 <h1 className="text-2xl font-bold text-center">Task Detail</h1>
                                 <ul>
                                     <li> Title: {item.attributes.title}</li>
-                                    <li> Status: {item.attributes.complete}</li>
+                                    <li> Status: {item.attributes.complete + ""}</li>
                                     <li> Title: {item.attributes.createdAt}</li>
                                     <li> Title: {item.attributes.updatedAt}</li>
                                 </ul>

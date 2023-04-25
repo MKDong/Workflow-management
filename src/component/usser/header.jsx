@@ -30,12 +30,13 @@ function Header() {
         localStorage.removeItem("token");
         dispatch(doLogout());
     }
-    const variableTaskUnFinish = useSelector((store) => store.counter.variablaCountTaskUnFinish);
+    const variableTaskAll = useSelector((store) => store.counter.taskAll);
+    const variableTaskUnFinish = variableTaskAll.filter((task) => task.attributes.complete === false);
+    // console.log(variableTaskAll);
 
     function handleShowBell() {
         setBell(!bell);
     }
-    console.log(bell);
     const items = [
         {
             label: <a href={"profile"}>Profile</a>,

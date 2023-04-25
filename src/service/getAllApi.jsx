@@ -45,9 +45,18 @@ function putTask(id, data, token) {
     return api.put(`api/tasks/${id}`, data, {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,   
         },
     });
+   
+}
+function changeChecked (id,check,token) {
+    return api.put(`api/tasks/${id}`,{data : {complete:check}},{
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+    })
 }
 
-export { getPopulate, getAllListask, postAddValue, getValueSearch, getMeToken, deleteTask, getTaskById, putTask };
+export { getPopulate, getAllListask, postAddValue, getValueSearch, getMeToken, deleteTask, getTaskById, putTask, changeChecked };
