@@ -47,7 +47,7 @@ function Statistical() {
     };
     return (
         <div className=" md:flex md:justify-between">
-            <div className="lg:w-[50%]">
+            <div className="md:w-[50%]">
                 <div>
                     <select
                         onChange={(event) => {
@@ -76,8 +76,8 @@ function Statistical() {
                     ></Table>
                 </div>
             </div>
-            <div className="lg:w-[45%] w-screen">
-                <Pie className="w-full" data={data} />
+            <div className="md:w-[45%] flex justify-center ">
+                <Pie className="" data={data} />
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { getTaskById, putTask } from "../../../service/getAllApi";
-import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
 import { useDispatch } from "react-redux";
 import Login from "../../auth/Login";
 
@@ -11,6 +11,7 @@ function View(props) {
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState("");
     const dispatch = useDispatch();
+    const token = localStorage.getItem("token");
 
     const getDetailTask = async () => {
         let res = await getTaskById(props.itemId);
@@ -33,14 +34,22 @@ function View(props) {
         dispatch(reRender());
     };
 
+    function handleCheckLogin() {
+        if (!token) {
+            dispatch(modalLogin(true));
+        } else {
+            const token = localStorage.getItem("token");
+            token ? setModalViewOpen(true) : <Login />;
+            getDetailTask();
+        }
+    }
+
     return (
         <>
             <Button
                 className="border rounded-md me-3 px-3 py-1 hover:bg-green-500 "
                 onClick={() => {
-                    const token = localStorage.getItem("token");
-                    token ? setModalViewOpen(true) : <Login />;
-                    getDetailTask();
+                    handleCheckLogin();
                 }}
             >
                 View

@@ -3,7 +3,7 @@ import { Table } from "antd";
 import { changeChecked, deleteTask, getAllListask } from "../../../service/getAllApi";
 import { useDispatch, useSelector } from "react-redux";
 import View from "../HOC/View";
-import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
 
 function ListTask() {
     const [taskList, setTaskList] = useState([]);
@@ -27,7 +27,7 @@ function ListTask() {
             }
         }
         fetchListTask();
-    }, [current, pageSize, variableSearch, reRenderr]);
+    }, [current, pageSize, variableSearch, reRenderr, token]);
 
     const onChange = (pagination) => {
         if (pagination && pagination.current !== current) {
@@ -43,10 +43,14 @@ function ListTask() {
         dispatch(reRender());
     };
     const handleCheck = (e, id) => {
-        // console.log(e);
-        const { checked } = e.target;
-        changeChecked(id, checked, token);
-        dispatch(reRender());
+        if (!token) {
+            dispatch(modalLogin(true));
+        } else {
+            // console.log(e);
+            const { checked } = e.target;
+            changeChecked(id, checked, token);
+            dispatch(reRender());
+        }
     };
 
     const columns = [
@@ -77,7 +81,7 @@ function ListTask() {
                 compare: (a, b) => a.chinese - b.chinese,
                 multiple: 3,
             },
-            render: (text, record) => (record.attributes.complete === true ? "true" : "false"),
+            render: (text, record) => (record.attributes.complete === true ? "Finish" : "Un Finish"),
         },
         {
             title: "CreatedAt",
@@ -106,7 +110,7 @@ function ListTask() {
                         <View itemId={record.id} />
                         <button
                             className="border rounded-md px-3 py-1 hover:bg-red-500 "
-                            onClick={() => handleDelete(record.id)}
+                            onClick={() => (token ? handleDelete(record.id) : dispatch(modalLogin(true)))}
                         >
                             Delete
                         </button>
@@ -117,7 +121,7 @@ function ListTask() {
     ];
 
     return (
-        <div>
+        <div className=" min-h-[450px]">
             {taskList.length === 1 ? (
                 <Table columns={columns} dataSource={taskList} onChange={onChange} />
             ) : (

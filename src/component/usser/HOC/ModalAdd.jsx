@@ -2,11 +2,12 @@ import { Button, Input, Modal } from "antd";
 import { useState } from "react";
 import { postAddValue } from "../../../service/getAllApi";
 import { useDispatch } from "react-redux";
-import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
 const ModalApp = () => {
     const [modal2Open, setModal2Open] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const dispatch = useDispatch();
+    const token = localStorage.getItem("token");
 
     const handleAddValue = async () => {
         setModal2Open(false);
@@ -23,9 +24,23 @@ const ModalApp = () => {
         dispatch(reRender());
     };
 
+    function handleOpenModalLogin() {
+        if (token) {
+            setModal2Open(true);
+        } else {
+            dispatch(modalLogin(true));
+        }
+    }
+
     return (
         <>
-            <Button className="bg-blue-500" type="primary" onClick={() => setModal2Open(true)}>
+            <Button
+                className="bg-blue-500"
+                type="primary"
+                onClick={() => {
+                    handleOpenModalLogin();
+                }}
+            >
                 Add Task
             </Button>
             <Modal

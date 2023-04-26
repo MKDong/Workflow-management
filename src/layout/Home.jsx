@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router";
 import Header from "../component/usser/header";
 import Footer from "../component/usser/footer";
-// import Export from "../component/usser/HOC/Excel/Export";
+// import ModalLogin from "../ModalLogin";
 
 function Home() {
     return (
@@ -10,8 +10,9 @@ function Home() {
             <div className="mb-8">
                 <Header />
             </div>
-            <div className="mx-12">
+            <div className="mx-12 mt-24">
                 <Outlet />
+                {/* <ModalLogin /> */}
             </div>
             <div className="mt-8">
                 <Footer />

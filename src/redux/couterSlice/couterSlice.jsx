@@ -12,6 +12,7 @@ const initialState = {
     variableSearch: null,
     variablaCountTaskUnFinish: null,
     ItemreRender: true,
+    openModalLogin: false,
 };
 
 export const counterSlice = createSlice({
@@ -41,10 +42,21 @@ export const counterSlice = createSlice({
         reRender: (state) => {
             return { ...state, ItemreRender: !state.ItemreRender };
         },
+        modalLogin: (state, action) => {
+            state.openModalLogin = action.payload;
+        },
     },
 });
 
-export const { doLoginAction, doLogout, AddValue, valueSearch, listTaskAll, reRender, taskAllNoPaginition } =
-    counterSlice.actions;
+export const {
+    doLoginAction,
+    doLogout,
+    AddValue,
+    valueSearch,
+    listTaskAll,
+    reRender,
+    taskAllNoPaginition,
+    modalLogin,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;

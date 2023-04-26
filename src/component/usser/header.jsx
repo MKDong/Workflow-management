@@ -4,7 +4,7 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { doLoginAction, doLogout } from "../../redux/couterSlice/couterSlice";
+import { doLoginAction, doLogout, modalLogin } from "../../redux/couterSlice/couterSlice";
 import ModalApp from "./HOC/ModalAdd";
 import Search from "./HOC/Search";
 import { getMeToken } from "../../service/getAllApi";
@@ -37,6 +37,13 @@ function Header() {
     function handleShowBell() {
         setBell(!bell);
     }
+
+    function handleNavLinkClick() {
+        if (!token) {
+            dispatch(modalLogin(true));
+        }
+    }
+
     const items = [
         {
             label: <a href={"profile"}>Profile</a>,
@@ -56,66 +63,68 @@ function Header() {
     ];
 
     return (
-        <div className="h-20 w-full bg-gray-300 px-10 flex justify-between">
-            <div className="p-2">
-                <NavLink to={"/"}>
-                    <img className="w-32" src="https://todogroup.org/img/logo.svg" alt="" />
-                </NavLink>
-            </div>
-            <div>
-                <Search className="w-1/3" />
-            </div>
-
-            <div className="flex mt-7">
-                <nav className="">
-                    <ul className="flex ">
-                        <li className="mx-5 hover:underline font-bold">
-                            <>{token ? <ModalApp /> : ""}</>
-                        </li>
-                        <li className="mx-5 hover:underline font-bold">
-                            <NavLink to={"statistical"}>Statistical</NavLink>
-                        </li>
-                        <li className="mx-5 hover:underline font-bold">
-                            <NavLink>About</NavLink>
-                        </li>
-                        <li className="w-7">
-                            <div
-                                className="relative inline-block"
-                                onClick={() => {
-                                    handleShowBell();
-                                }}
-                            >
-                                <BellOutlined className="" />
-                                <div className="absolute top-[-6px] right-[-9px] w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">
-                                    {variableTaskUnFinish ? variableTaskUnFinish.length : 0}
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div>
-                    <Dropdown menu={{ items }} trigger={["click"]}>
-                        <div onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                <p>
-                                    <b>
-                                        {token ? (
-                                            <>hello {user}</>
-                                        ) : (
-                                            <div>
-                                                <NavLink to={"/auth"}>Signin </NavLink> |
-                                                <NavLink to={"auth/register"}> Signup</NavLink>
-                                            </div>
-                                        )}
-                                    </b>
-                                </p>
-                            </Space>
-                        </div>
-                    </Dropdown>
+        <div className="fixed top-0 w-full z-10">
+            <div className="h-20  bg-gray-300 px-10 flex justify-between ">
+                <div className="p-2">
+                    <NavLink to={"/"}>
+                        <img className="w-32" src="https://todogroup.org/img/logo.svg" alt="" />
+                    </NavLink>
                 </div>
+                <div>
+                    <Search className="w-1/3" />
+                </div>
+                <div className="flex mt-7">
+                    <nav className="">
+                        <ul className="flex ">
+                            <li className="mx-5 hover:underline font-bold">
+                                <ModalApp />
+                            </li>
+                            <li className="mx-5 hover:underline font-bold">
+                                <NavLink to={"statistical"} onClick={handleNavLinkClick}>
+                                    Statistical
+                                </NavLink>
+                            </li>
+                            <li className="mx-5 hover:underline font-bold">
+                                <NavLink>About</NavLink>
+                            </li>
+                            <li className="w-7">
+                                <div
+                                    className="relative inline-block"
+                                    onClick={() => {
+                                        handleShowBell();
+                                    }}
+                                >
+                                    <BellOutlined className="" />
+                                    <div className="absolute top-[-6px] right-[-9px] w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">
+                                        {variableTaskUnFinish ? variableTaskUnFinish.length : 0}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div>
+                        <Dropdown menu={{ items }} trigger={["click"]}>
+                            <div onClick={(e) => e.preventDefault()}>
+                                <Space>
+                                    <p>
+                                        <b>
+                                            {token ? (
+                                                <>hello {user}</>
+                                            ) : (
+                                                <div>
+                                                    <NavLink to={"/auth"}>Signin </NavLink> |
+                                                    <NavLink to={"auth/register"}> Signup</NavLink>
+                                                </div>
+                                            )}
+                                        </b>
+                                    </p>
+                                </Space>
+                            </div>
+                        </Dropdown>
+                    </div>
+                </div>
+                <div>{bell ? <ModalBell /> : []}</div>
             </div>
-            <div>{bell ? <ModalBell /> : []}</div>
         </div>
     );
 }
