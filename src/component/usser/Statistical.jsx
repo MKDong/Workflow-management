@@ -32,6 +32,7 @@ function Statistical() {
     const variableTaskAll = useSelector((store) => store.counter.taskAll);
     const variableTaskUnFinish = variableTaskAll.filter((task) => task.attributes.complete === false);
     const variableTaskFinish = variableTaskAll.filter((task) => task.attributes.complete === true);
+    console.log(variableTaskFinish, variableTaskUnFinish);
 
     const data = {
         labels: ["Finish ", "UnFinish"],
