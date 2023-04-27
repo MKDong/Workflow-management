@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import View from "../HOC/View";
 import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
 import "../HOC/loading.css";
+import Loading from "../HOC/Loading";
 
 function ListTask() {
+    const [isLoading, setIsLoading] = useState(true);
     const [taskList, setTaskList] = useState([]);
     const [pageSize, setPageSize] = useState(5);
     const [current, setCurrent] = useState(1);
@@ -26,6 +28,7 @@ function ListTask() {
             if (variableSearch) {
                 setTaskList([variableSearch]);
             }
+            setIsLoading(false);
         }
         fetchListTask();
     }, [current, pageSize, variableSearch, reRenderr, token]);
@@ -137,7 +140,9 @@ function ListTask() {
         },
     ];
 
-    return (
+    return isLoading ? (
+        <Loading />
+    ) : (
         <div className=" min-h-[450px]">
             {taskList.length === 1 ? (
                 <Table columns={columns} dataSource={taskList} onChange={onChange} />
