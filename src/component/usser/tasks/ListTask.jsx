@@ -4,6 +4,7 @@ import { changeChecked, deleteTask, getAllListask } from "../../../service/getAl
 import { useDispatch, useSelector } from "react-redux";
 import View from "../HOC/View";
 import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
+import "../HOC/loading.css";
 
 function ListTask() {
     const [taskList, setTaskList] = useState([]);
@@ -58,13 +59,29 @@ function ListTask() {
             title: "`?",
             dataIndex: "check",
             render: (text, record) => {
-                // console.log(record);
+                const id = `cbx-${record.id}`;
                 return (
-                    <input
-                        type="checkbox"
-                        onChange={(e) => handleCheck(e, record.id)}
-                        checked={record.attributes.complete}
-                    />
+                    <div className="container">
+                        <input
+                            type="checkbox"
+                            id={id}
+                            style={{ display: "none" }}
+                            onChange={(e) => handleCheck(e, record.id)}
+                            checked={record.attributes.complete}
+                        />
+                        <label htmlFor={id} className="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path d="M 1 9 L 1 9 c 0 -5 3 -8 8 -8 L 9 1 C 14 1 17 5 17 9 L 17 9 c 0 4 -4 8 -8 8 L 9 17 C 5 17 1 14 1 9 L 1 9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+
+                    // <input
+                    //     type="checkbox"
+                    //     onChange={(e) => handleCheck(e, record.id)}
+                    //     checked={record.attributes.complete}
+                    // />
                 );
             },
         },
