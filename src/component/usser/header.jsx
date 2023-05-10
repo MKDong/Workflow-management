@@ -95,9 +95,11 @@ function Header() {
                                     }}
                                 >
                                     <BellOutlined className="" />
-                                    <div className="absolute top-[-6px] right-[-9px] w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">
-                                        {variableTaskUnFinish ? variableTaskUnFinish.length : 0}
-                                    </div>
+                                    {variableTaskUnFinish && variableTaskUnFinish.length !== 0 && (
+                                        <div className="absolute top-[-6px] right-[-9px] w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">
+                                            {variableTaskUnFinish.length}
+                                        </div>
+                                    )}
                                 </div>
                             </li>
                         </ul>

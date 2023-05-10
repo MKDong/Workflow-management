@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { getPopulate } from './service/getAllApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { taskAllNoPaginition } from './redux/couterSlice/couterSlice';
+import PrivateRouter from './component/auth/PrivateRouter'
 
 function App() {
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}>
         <Route index element={<ListTask/>} />
-        <Route path='profile' element={<Profile/>} />
+        <Route path='profile' element={<PrivateRouter> <Profile/> </PrivateRouter>} />
         <Route path='statistical' element={<Statistical/>} />
       </Route>
 
