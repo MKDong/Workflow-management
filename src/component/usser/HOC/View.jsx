@@ -1,7 +1,8 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { getTaskById, putTask } from "../../../service/getAllApi";
-import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
+import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { modalLogin } from "../../../redux/couterSlice/UserSlice";
 import { useDispatch } from "react-redux";
 import Login from "../../auth/Login";
 

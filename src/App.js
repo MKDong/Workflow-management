@@ -17,7 +17,8 @@ function App() {
   const reRenderr = useSelector((store) => store.counter.ItemreRender);
   useEffect(() => {
     async function getAllTask() {
-        let res = await getPopulate();
+      let res = await getPopulate();
+      console.log(res.data.data);
         dispatch(taskAllNoPaginition(res.data.data))
         // console.log(res.data.data);
     }

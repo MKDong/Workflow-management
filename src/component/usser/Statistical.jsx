@@ -47,40 +47,41 @@ function Statistical() {
         ],
     };
     return (
-        <div className=" md:flex md:justify-between">
-            <div className="md:w-[50%]">
-                <div>
-                    <select
-                        onChange={(event) => {
-                            const selectedOption = event.target.value;
-                            if (selectedOption === "finish") {
-                                // console.log("finish");
-                                setStatusUnFinis(false);
-                            } else if (selectedOption === "unfinish") {
-                                // console.log("unfinish");
-                                setStatusUnFinis(true);
-                            }
-                        }}
-                    >
-                        <option value="finish">Finish Task</option>
-                        <option value="unfinish">Unfinish Task</option>
-                    </select>
-                </div>
-                <div>
-                    <Table
-                        columns={columns}
-                        rowKey={(item) => item.id}
-                        dataSource={statusUnFinish ? variableTaskUnFinish : variableTaskFinish}
-                        pagination={{
-                            pageSize: 5,
-                        }}
-                    ></Table>
-                </div>
-            </div>
-            <div className="md:w-[45%] flex justify-center ">
-                <Pie className="" data={data} />
-            </div>
+      <div className=" md:flex md:justify-between">
+        <div className="md:w-[50%]">
+          <div>
+            <select
+              onChange={(event) => {
+                const selectedOption = event.target.value;
+                if (selectedOption === "finish") {
+                  // console.log("finish");
+                  setStatusUnFinis(false);
+                } else if (selectedOption === "unfinish") {
+                  // console.log("unfinish");
+                  setStatusUnFinis(true);
+                }
+              }}>
+              <option value="finish">Finish Task</option>
+              <option value="unfinish">Unfinish Task</option>
+            </select>
+          </div>
+          <div>
+            <Table
+              columns={columns}
+              rowKey={(item) => item.id}
+              dataSource={
+                statusUnFinish ? variableTaskUnFinish : variableTaskFinish
+              }
+              pagination={{
+                  pageSize: 5,
+                  className: 'paginationabc'
+              }}></Table>
+          </div>
         </div>
+        <div className="md:w-[45%] flex justify-center ">
+          <Pie className="" data={data} />
+        </div>
+      </div>
     );
 }
 

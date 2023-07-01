@@ -3,7 +3,8 @@ import { Table } from "antd";
 import { changeChecked, deleteTask, getAllListask } from "../../../service/getAllApi";
 import { useDispatch, useSelector } from "react-redux";
 import View from "../HOC/View";
-import { modalLogin, reRender } from "../../../redux/couterSlice/couterSlice";
+import { reRender } from "../../../redux/couterSlice/couterSlice";
+import { modalLogin } from "../../../redux/couterSlice/UserSlice";
 import "../HOC/loading.css";
 import Loading from "../HOC/Loading";
 
@@ -15,8 +16,10 @@ function ListTask() {
     const [total, setTotal] = useState(0);
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
-    const variableSearch = useSelector((store) => store.counter.variableSearch);
-    // const taskFullRedux = useSelector((store) => store.counter.taskList);
+    const variableSearch = useSelector(
+      (store) => store.taskSlice.variableSearch
+    );
+    // const taskFullRedux = useSelector((store) => store.task.taskList);
     // console.log(variableSearch);
     const reRenderr = useSelector((store) => store.counter.ItemreRender);
     useEffect(() => {
@@ -59,32 +62,32 @@ function ListTask() {
 
     const columns = [
         {
-            title: "`?",
+            title: "",
             dataIndex: "check",
             render: (text, record) => {
                 const id = `cbx-${record.id}`;
                 return (
-                    <div className="container">
-                        <input
-                            type="checkbox"
-                            id={id}
-                            style={{ display: "none" }}
-                            onChange={(e) => handleCheck(e, record.id)}
-                            checked={record.attributes.complete}
-                        />
-                        <label htmlFor={id} className="check">
-                            <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                <path d="M 1 9 L 1 9 c 0 -5 3 -8 8 -8 L 9 1 C 14 1 17 5 17 9 L 17 9 c 0 4 -4 8 -8 8 L 9 17 C 5 17 1 14 1 9 L 1 9 Z"></path>
-                                <polyline points="1 9 7 14 15 4"></polyline>
-                            </svg>
-                        </label>
-                    </div>
+                    // <div className="container">
+                    //     <input
+                    //         type="checkbox"
+                    //         id={id}
+                    //         style={{ display: "none" }}
+                    //         onChange={(e) => handleCheck(e, record.id)}
+                    //         checked={record.attributes.complete}
+                    //     />
+                    //     <label htmlFor={id} className="check">
+                    //         <svg width="18px" height="18px" viewBox="0 0 18 18">
+                    //             <path d="M 1 9 L 1 9 c 0 -5 3 -8 8 -8 L 9 1 C 14 1 17 5 17 9 L 17 9 c 0 4 -4 8 -8 8 L 9 17 C 5 17 1 14 1 9 L 1 9 Z"></path>
+                    //             <polyline points="1 9 7 14 15 4"></polyline>
+                    //         </svg>
+                    //     </label>
+                    // </div>
 
-                    // <input
-                    //     type="checkbox"
-                    //     onChange={(e) => handleCheck(e, record.id)}
-                    //     checked={record.attributes.complete}
-                    // />
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheck(e, record.id)}
+                        checked={record.attributes.complete}
+                    />
                 );
             },
         },
@@ -122,6 +125,15 @@ function ListTask() {
             },
         },
         {
+            title: "Date Complete",
+            dataIndex: "date",
+            sorter: true,
+            render: (text, record) => {
+                let updatedAt = new Date(record.attributes.date).toLocaleString();
+                return <>{updatedAt}</>;
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (text, record) => {
@@ -143,7 +155,7 @@ function ListTask() {
     return isLoading ? (
         <Loading />
     ) : (
-        <div className=" min-h-[450px]">
+        <div className=" min-h-[450px] ">
             {taskList.length === 1 ? (
                 <Table columns={columns} dataSource={taskList} onChange={onChange} />
             ) : (
@@ -152,7 +164,7 @@ function ListTask() {
                     dataSource={taskList}
                     onChange={onChange}
                     rowKey={(record) => record.id}
-                    pagination={{
+                            pagination={{
                         pageSize: pageSize,
                         current: current,
                         total: total,

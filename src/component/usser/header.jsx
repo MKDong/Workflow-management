@@ -4,7 +4,7 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { doLoginAction, doLogout, modalLogin } from "../../redux/couterSlice/couterSlice";
+import { doLoginAction, doLogout, modalLogin } from "../../redux/couterSlice/UserSlice"
 import ModalApp from "./HOC/ModalAdd";
 import Search from "./HOC/Search";
 import { getMeToken } from "../../service/getAllApi";
@@ -13,7 +13,7 @@ import ModalBell from "./HOC/ModalBell";
 
 function Header() {
     const [bell, setBell] = useState(false);
-    const user = useSelector((store) => store.counter.user.username);
+    const user = useSelector((store) => store.user.user.username);
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
 

@@ -1,7 +1,7 @@
 import Link from "antd/es/typography/Link";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { modalLogin } from "./redux/couterSlice/couterSlice";
+import { modalLogin } from "./redux/couterSlice/UserSlice";
 import { CloseOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { message } from "antd";

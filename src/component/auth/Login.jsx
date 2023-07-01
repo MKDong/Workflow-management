@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { doLoginAction } from "../../redux/couterSlice/couterSlice";
+import { doLoginAction } from "../../redux/couterSlice/UserSlice";
 
 function Login() {
     const navigate = useNavigate();
