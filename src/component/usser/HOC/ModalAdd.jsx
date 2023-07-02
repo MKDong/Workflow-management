@@ -60,7 +60,6 @@ const ModalApp = () => {
           handleAddValue();
         }}
         onCancel={() => setModal2Open(false)}
-        className="bg-blue-500!flex"
         okText="Add"
         okButtonProps={{ className: "my-ok-button" }}>
         <Input
@@ -70,7 +69,7 @@ const ModalApp = () => {
           onChange={(e) => setInputValue(e.target.value)}
           // handle input change and update state
         />
-          <DatePicker className="input-date-done-task w-[100%]" showTime onChange={onChange} onOk={onOk} />
+          <DatePicker className="input-date-done-task w-[100%] mt-3" showTime onChange={onChange} onOk={onOk} />
       </Modal>
     </>
   );
